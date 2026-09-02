@@ -129,6 +129,12 @@ def display_chart(filtered_df):
             )
             st.plotly_chart(fig4, width="content")
 
+def display_dataframe(filtered_df):
+    if len(filtered_df) > 0:
+        st.dataframe(filtered_df, width="stretch", height=300)
+    else:
+        st.warning("No employee data to display.")
+
 def main():
     # load dataset
     df = load_dataset()
@@ -148,6 +154,9 @@ def main():
 
     #plotly_chart
     display_chart(filtered_df)
+
+    #display table
+    display_dataframe(filtered_df)
 
 if __name__ == "__main__":
     main()
