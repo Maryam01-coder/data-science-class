@@ -52,7 +52,7 @@ def display_metrics(filtered_df):
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        st.metric("👤 Total Employee", len(filtered_df))
+        st.metric("👤 Total Employee", len(filtered_df)
 
     with col2:
         avg_salary = filtered_df["Salary"].mean() if len(filtered_df) > 0 else 0
