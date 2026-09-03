@@ -84,7 +84,7 @@ def display_chart(filtered_df):
         st.plotly_chart(fig1, width="stretch")
 
     with col2:
-        st.subheader("Average Salary by Header")
+        st.subheader("Average Salary by Department")
         avg_salary = filtered_df.groupby("Department")["Salary"].mean().sort_values(ascending=False)
         fig2 = px.bar(
             x=avg_salary.values,
