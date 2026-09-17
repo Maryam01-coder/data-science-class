@@ -140,6 +140,10 @@ def charts(filtered_df):
         xaxis_title='Year',
         yaxis_title='Cars of the Year'
     )
+    fig4.update_traces(
+    marker_line_color="white",
+    marker_line_width=2
+)
     st.plotly_chart(fig4, width='stretch')
 
     st.subheader('Year VS Price using Car Condition')
