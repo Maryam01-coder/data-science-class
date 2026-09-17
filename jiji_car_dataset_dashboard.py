@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 
-@st.cache_data
+# @st.cache_data
 def load_dataset():
     try:
         df = pd.read_csv("cleaned_jiji_car_dataset.csv")
@@ -21,7 +21,7 @@ def load_dataset():
 
 
 def create_sidebar_filter(df):
-    st.sidebar.header("Filters")
+    st.sidebar.header("🔍 Filters")
 
     make = st.sidebar.multiselect(
         "Select Car Brand",
@@ -77,8 +77,8 @@ def display_metrics(filtered_df):
         st.metric("💰 Average Car Price", format_price(avg_price))
 
     with col3:
-        most_common_car = filtered_df["model"].value_counts().idxmax() if len(filtered_df) > 0 else 0
-        st.metric("🚙 Most Common Car", f"{most_common_car}")
+        most_common_brand = filtered_df["make"].value_counts().idxmax() if len(filtered_df) > 0 else 0
+        st.metric("🚙 Most Common Brand", f"{most_common_brand}")
 
     with col4:
         foreing_used = (filtered_df["condition"] == "Foreign Used").sum() / len(filtered_df) * 100 if len(filtered_df) > 0 else 0
@@ -214,7 +214,7 @@ def main():
     filtered_df = filter_data(df, make, condition, transmission, year)
 
     #main_layout
-    st.title("Jiji Car Listings Dashboard")
+    st.title("🚗 Jiji Car Listings Dashboard")
     st.markdown("---")
 
     #metrics
