@@ -34,18 +34,26 @@ def create_sidebar_filter(df):
         options=df["condition"].unique(),
         default=df["condition"].unique(),
     )
-    year = st.sidebar.multiselect(
-        "Select Year",
-        options=df["year"].unique(),
-        default=df["year"].unique(),
+    transmission = st.sidebar.multiselect(
+        "Select Car Transmission",
+        options=df["transmission"].unique(),
+        default=df["transmission"].unique(),
     )
-    return make, condition, year
+    year = st.sidebar.slider(
+    "Select Year",
+    min_value=int(df["year"].min()),
+    max_value=int(df["year"].max()),
+    value=(int(df["year"].min()), int(df["year"].max()))
+    )
+    return make, condition, transmission, year
 
-def filter_data(df, make, condition, year):
+def filter_data(df, make, condition, transmission, year):
     filtered_df = df[
-        df["make"].isin(make) & 
-        df["condition"].isin(condition) & 
-        df["year"].isin(year)
+        (df["make"].isin(make)) & 
+        (df["condition"].isin(condition)) & 
+        (df["transmission"].isin(transmission)) & 
+        (df["year"] >= year[0]) &
+        (df["year"] <= year[1])
     ]
 
     return filtered_df 
@@ -184,10 +192,10 @@ def main():
     df = load_dataset()
 
     # sidebar
-    make, condition, year = create_sidebar_filter(df)
+    make, condition, transmission, year = create_sidebar_filter(df)
 
     # filtered_df 
-    filtered_df = filter_data(df, make, condition, year)
+    filtered_df = filter_data(df, make, condition, transmission, year)
 
     #main_layout
     st.title("Car Listings Dashboard")
