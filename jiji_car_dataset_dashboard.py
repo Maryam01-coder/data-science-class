@@ -178,16 +178,28 @@ def charts(filtered_df):
         text_auto=True,
         aspect="auto",
         labels=dict(
-            x="Variable",
-            y="Variable",
             color="Correlation"
         )
     )
     st.plotly_chart(fig6, width="stretch")    
 
 def table(filtered_df):
+    st.subheader("🛠 Top 5 Car Brands")
+    top_5_makes = (
+        filtered_df.groupby("make")
+        .agg(
+            Number_of_Cars=("make", "count"),
+            Total_Price=("price", "sum")
+        )
+        .sort_values("Total_Price", ascending=False)
+        .head(5)
+        .reset_index()
+    )
+    st.dataframe(top_5_makes, hide_index=True)
+
+    st.subheader("📊 Car listing Dataset") 
     if len(filtered_df) > 0:
-        st.dataframe(filtered_df, width='stretch', height=300)
+        st.dataframe(filtered_df, width='stretch', height=300, hide_index=True)
     else:
         st.warning('No record to display. Use the filter options.')
 
@@ -202,7 +214,7 @@ def main():
     filtered_df = filter_data(df, make, condition, transmission, year)
 
     #main_layout
-    st.title("Car Listings Dashboard")
+    st.title("Jiji Car Listings Dashboard")
     st.markdown("---")
 
     #metrics
